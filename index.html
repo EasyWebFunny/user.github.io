@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Astro Fonds d'écran — Soleil &amp; Lune</title>
+<style>
+  :root { color-scheme: dark; }
+  body {
+    margin: 0; padding: 1rem;
+    font-family: Georgia, 'Times New Roman', serif;
+    background: #0b0b1a; color: #e8e2d0;
+    text-align: center;
+  }
+  h1 { font-size: 1.4rem; margin: .5rem 0 1.2rem; color: #f0d890; }
+  .cards { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; }
+  .card {
+    background: #161630; border: 1px solid #3a3a60; border-radius: 12px;
+    padding: 1rem; width: min(92vw, 360px);
+  }
+  .card h2 { margin: 0 0 .3rem; font-size: 1.1rem; color: #f0d890; }
+  .card .sign { font-size: 1.5rem; margin: .2rem 0; }
+  .card .deg { color: #b8b0a0; font-size: .95rem; margin-bottom: .8rem; }
+  .card img { width: 100%; border-radius: 8px; display: block; }
+  .role { font-size: .85rem; letter-spacing: .08em; text-transform: uppercase; color: #9090c0; }
+  footer { margin-top: 1.5rem; font-size: .8rem; color: #707090; }
+</style>
+</head>
+<body>
+<h1>☉ ☾ Fonds d'écran astrologiques</h1>
+<div class="cards">
+  <div class="card">
+    <div class="role">Écran de verrouillage</div>
+    <h2>☉ Soleil</h2>
+    <div class="sign" id="sun-sign">…</div>
+    <div class="deg" id="sun-deg"></div>
+    <img id="sun-img" alt="Tableau du signe du Soleil">
+  </div>
+  <div class="card">
+    <div class="role">Écran d'accueil</div>
+    <h2>☾ Lune</h2>
+    <div class="sign" id="moon-sign">…</div>
+    <div class="deg" id="moon-deg"></div>
+    <img id="moon-img" alt="Tableau du signe de la Lune">
+  </div>
+</div>
+<footer>
+  Positions géocentriques, zodiaque tropical — calculées en direct sur cet appareil.<br>
+  Peintures : Johfra Bosschart, série du Zodiaque.
+</footer>
+<script>
+// Formules de Paul Schlyter ("Computing planetary positions").
+// Mêmes calculs que scripts/update_wallpapers.py.
+const SIGNS = [
+  ["aries","Bélier ♈"],["taurus","Taureau ♉"],["gemini","Gémeaux ♊"],
+  ["cancer","Cancer ♋"],["leo","Lion ♌"],["virgo","Vierge ♍"],
+  ["libra","Balance ♎"],["scorpio","Scorpion ♏"],["sagittarius","Sagittaire ♐"],
+  ["capricorn","Capricorne ♑"],["aquarius","Verseau ♒"],["pisces","Poissons ♓"]
+];
+const rev = x => ((x % 360) + 360) % 360;
+const rad = x => x * Math.PI / 180;
+const deg = x => x * 180 / Math.PI;
+
+function daysSinceJ2000(date) {
+  return (date.getTime() - Date.UTC(1999, 11, 31)) / 86400000;
+}
+
+function sunLongitude(d) {
+  const w = rev(282.9404 + 4.70935e-5 * d);
+  const e = 0.016709 - 1.151e-9 * d;
+  const M = rev(356.0470 + 0.9856002585 * d);
+  const E = M + deg(e) * Math.sin(rad(M)) * (1 + e * Math.cos(rad(M)));
+  const xv = Math.cos(rad(E)) - e;
+  const yv = Math.sqrt(1 - e * e) * Math.sin(rad(E));
+  return rev(deg(Math.atan2(yv, xv)) + w);
+}
+
+function moonLongitude(d) {
+  const N = rev(125.1228 - 0.0529538083 * d);
+  const i = 5.1454;
+  const w = rev(318.0634 + 0.1643573223 * d);
+  const a = 60.2666, e = 0.054900;
+  const M = rev(115.3654 + 13.0649929509 * d);
+  let E = M + deg(e) * Math.sin(rad(M)) * (1 + e * Math.cos(rad(M)));
+  for (let k = 0; k < 10; k++)
+    E = E - (E - deg(e) * Math.sin(rad(E)) - M) / (1 - e * Math.cos(rad(E)));
+  const xv = a * (Math.cos(rad(E)) - e);
+  const yv = a * Math.sqrt(1 - e * e) * Math.sin(rad(E));
+  const v = deg(Math.atan2(yv, xv));
+  const r = Math.sqrt(xv * xv + yv * yv);
+  const xh = r * (Math.cos(rad(N)) * Math.cos(rad(v + w)) - Math.sin(rad(N)) * Math.sin(rad(v + w)) * Math.cos(rad(i)));
+  const yh = r * (Math.sin(rad(N)) * Math.cos(rad(v + w)) + Math.cos(rad(N)) * Math.sin(rad(v + w)) * Math.cos(rad(i)));
+  let lon = rev(deg(Math.atan2(yh, xh)));
+  const Ms = rev(356.0470 + 0.9856002585 * d);
+  const ws = rev(282.9404 + 4.70935e-5 * d);
+  const Ls = rev(Ms + ws), Lm = rev(N + w + M);
+  const D = rev(Lm - Ls), F = rev(Lm - N);
+  lon += -1.274 * Math.sin(rad(M - 2 * D))
+       + 0.658 * Math.sin(rad(2 * D))
+       - 0.186 * Math.sin(rad(Ms))
+       - 0.059 * Math.sin(rad(2 * M - 2 * D))
+       - 0.057 * Math.sin(rad(M - 2 * D + Ms))
+       + 0.053 * Math.sin(rad(M + 2 * D))
+       + 0.046 * Math.sin(rad(2 * D - Ms))
+       + 0.041 * Math.sin(rad(M - Ms))
+       - 0.035 * Math.sin(rad(D))
+       - 0.031 * Math.sin(rad(M + Ms))
+       - 0.015 * Math.sin(rad(2 * F - 2 * D))
+       + 0.011 * Math.sin(rad(M - 4 * D));
+  return rev(lon);
+}
+
+function fmtDeg(lon) {
+  const inSign = lon % 30;
+  const dd = Math.floor(inSign);
+  const mm = Math.round((inSign - dd) * 60);
+  return `${dd}°${String(mm).padStart(2, "0")}' dans le signe`;
+}
+
+function refresh() {
+  const d = daysSinceJ2000(new Date());
+  const sLon = sunLongitude(d), mLon = moonLongitude(d);
+  const [sKey, sName] = SIGNS[Math.floor(sLon / 30) % 12];
+  const [mKey, mName] = SIGNS[Math.floor(mLon / 30) % 12];
+  document.getElementById("sun-sign").textContent = sName;
+  document.getElementById("sun-deg").textContent = fmtDeg(sLon);
+  document.getElementById("sun-img").src = "astro/images/" + sKey + ".jpg";
+  document.getElementById("moon-sign").textContent = mName;
+  document.getElementById("moon-deg").textContent = fmtDeg(mLon);
+  document.getElementById("moon-img").src = "astro/images/" + mKey + ".jpg";
+}
+refresh();
+setInterval(refresh, 10 * 60 * 1000);
+</script>
+</body>
+</html>

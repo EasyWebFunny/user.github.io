@@ -1,0 +1,35 @@
+name: Fonds d'écran astro (Soleil / Lune)
+
+on:
+  schedule:
+    # Toutes les 2 heures (la Lune change de signe environ tous les 2,5 jours)
+    - cron: "7 */2 * * *"
+  workflow_dispatch:
+  push:
+    branches:
+      - claude/astro-lockscreen-homescreen-sync-863mgt
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Calculer les positions et mettre à jour les images
+        run: python3 scripts/update_wallpapers.py
+
+      - name: Committer si un signe a changé
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add astro/sun.jpg astro/moon.jpg astro/status.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Mise à jour auto : Soleil/Lune ont changé de signe"
+            git push
+          else
+            echo "Aucun changement de signe — rien à committer."
+          fi
