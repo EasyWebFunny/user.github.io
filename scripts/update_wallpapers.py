@@ -16,6 +16,8 @@ from PIL import Image, ImageEnhance, ImageFilter, ImageOps
 
 # Dimensions de l'écran du téléphone cible (Xiaomi, 1220×2712).
 WALL_W, WALL_H = 1220, 2712
+# Zoom léger du tableau : >1 agrandit (rogne un peu les bords gauche/droit).
+ZOOM = 1.12
 
 SIGNS = [
     ("aries", "Bélier"),
@@ -128,9 +130,10 @@ def make_wallpaper(src, dest):
     background = background.filter(ImageFilter.GaussianBlur(60))
     background = ImageEnhance.Brightness(background).enhance(0.45)
 
-    fg_h = round(WALL_W * painting.height / painting.width)
-    foreground = painting.resize((WALL_W, fg_h), Image.LANCZOS)
-    background.paste(foreground, (0, (WALL_H - fg_h) // 2))
+    fg_w = round(WALL_W * ZOOM)
+    fg_h = round(fg_w * painting.height / painting.width)
+    foreground = painting.resize((fg_w, fg_h), Image.LANCZOS)
+    background.paste(foreground, ((WALL_W - fg_w) // 2, (WALL_H - fg_h) // 2))
 
     import io
     buf = io.BytesIO()
