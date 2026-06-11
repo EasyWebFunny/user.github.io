@@ -9,9 +9,13 @@ largement suffisante pour déterminer un signe de 30°.
 
 import json
 import math
-import shutil
 from datetime import datetime, timezone
 from pathlib import Path
+
+from PIL import Image, ImageEnhance, ImageFilter, ImageOps
+
+# Dimensions de l'écran du téléphone cible (Xiaomi, 1220×2712).
+WALL_W, WALL_H = 1220, 2712
 
 SIGNS = [
     ("aries", "Bélier"),
@@ -115,6 +119,27 @@ def sign_of(longitude):
     return SIGNS[int(longitude // 30) % 12]
 
 
+def make_wallpaper(src, dest):
+    """Compose un fond d'écran aux dimensions exactes de l'écran : le tableau
+    entier (non rogné) centré sur un fond fait de la même image floutée."""
+    painting = Image.open(src).convert("RGB")
+
+    background = ImageOps.fit(painting, (WALL_W, WALL_H))
+    background = background.filter(ImageFilter.GaussianBlur(60))
+    background = ImageEnhance.Brightness(background).enhance(0.45)
+
+    fg_h = round(WALL_W * painting.height / painting.width)
+    foreground = painting.resize((WALL_W, fg_h), Image.LANCZOS)
+    background.paste(foreground, (0, (WALL_H - fg_h) // 2))
+
+    import io
+    buf = io.BytesIO()
+    background.save(buf, "JPEG", quality=90)
+    data = buf.getvalue()
+    if not dest.exists() or dest.read_bytes() != data:
+        dest.write_bytes(data)
+
+
 def main():
     now = datetime.now(timezone.utc)
     d = days_since_j2000(now)
@@ -124,8 +149,8 @@ def main():
     sun_key, sun_fr = sign_of(sun_lon)
     moon_key, moon_fr = sign_of(moon_lon)
 
-    shutil.copyfile(ASTRO / "images" / f"{sun_key}.jpg", ASTRO / "sun.jpg")
-    shutil.copyfile(ASTRO / "images" / f"{moon_key}.jpg", ASTRO / "moon.jpg")
+    make_wallpaper(ASTRO / "images" / f"{sun_key}.jpg", ASTRO / "sun.jpg")
+    make_wallpaper(ASTRO / "images" / f"{moon_key}.jpg", ASTRO / "moon.jpg")
 
     # Volontairement sans horodatage ni degrés : le fichier ne change que
     # lorsqu'un signe change, donc le workflow ne committe qu'à ce moment-là.

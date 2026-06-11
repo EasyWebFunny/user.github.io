@@ -20,7 +20,9 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Calculer les positions et mettre à jour les images
-        run: python3 scripts/update_wallpapers.py
+        run: |
+          pip install pillow==12.2.0
+          python3 scripts/update_wallpapers.py
 
       - name: Committer si un signe a changé
         run: |
