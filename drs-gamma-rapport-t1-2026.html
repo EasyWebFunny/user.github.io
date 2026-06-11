@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rapport d'Auto-Évaluation de la Performance — DRS GAMMA | T1 2026</title>
+  <style>
+    :root {
+      --green:   #16a34a;
+      --red:     #dc2626;
+      --orange:  #ea580c;
+      --blue:    #1d4ed8;
+      --gray:    #475569;
+      --bg:      #f8fafc;
+      --card-bg: #ffffff;
+      --border:  #e2e8f0;
+      --header-bg: #0f172a;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg);
+      color: #1e293b;
+      line-height: 1.6;
+    }
+
+    /* ── COVER ── */
+    .cover {
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 60%, #1d4ed8 100%);
+      color: white;
+      padding: 3rem 2rem 2.5rem;
+      text-align: center;
+    }
+    .cover .ministry { font-size: .8rem; letter-spacing: .1em; opacity: .75; text-transform: uppercase; margin-bottom: 1rem; }
+    .cover h1 { font-size: 1.9rem; font-weight: 800; margin-bottom: .5rem; }
+    .cover h2 { font-size: 1.1rem; font-weight: 400; opacity: .85; margin-bottom: 1.5rem; }
+    .cover-meta {
+      display: flex; flex-wrap: wrap; justify-content: center; gap: .75rem;
+      margin-top: 1.5rem;
+    }
+    .cover-meta span {
+      background: rgba(255,255,255,.15);
+      border: 1px solid rgba(255,255,255,.25);
+      border-radius: 999px;
+      padding: .35rem 1rem;
+      font-size: .85rem;
+    }
+    .cover-badge {
+      display: inline-block;
+      margin-top: 1.2rem;
+      background: #1d4ed8;
+      border: 2px solid rgba(255,255,255,.4);
+      border-radius: 8px;
+      padding: .5rem 1.5rem;
+      font-size: .9rem;
+      font-weight: 600;
+    }
+
+    /* ── LAYOUT ── */
+    .container { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+    /* ── SECTION HEADERS ── */
+    .section-title {
+      font-size: 1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: white;
+      background: var(--header-bg);
+      padding: .6rem 1rem;
+      border-radius: 6px 6px 0 0;
+      margin-bottom: 0;
+    }
+    .section-body {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-top: none;
+      border-radius: 0 0 8px 8px;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    /* ── INFO GRID ── */
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: .75rem;
+      margin-top: .5rem;
+    }
+    .info-item {
+      background: #f1f5f9;
+      border-radius: 6px;
+      padding: .65rem 1rem;
+      font-size: .88rem;
+    }
+    .info-item strong { display: block; font-size: .75rem; text-transform: uppercase; letter-spacing: .05em; color: var(--gray); margin-bottom: .2rem; }
+
+    /* ── SCORE BARS ── */
+    .domain-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+    }
+    .domain-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .domain-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: .6rem 1rem;
+      font-weight: 700;
+      font-size: .82rem;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+    .domain-card-header.green  { background:#dcfce7; color:#166534; }
+    .domain-card-header.orange { background:#ffedd5; color:#9a3412; }
+    .domain-card-header.red    { background:#fee2e2; color:#991b1b; }
+    .domain-card-header.gray   { background:#f1f5f9; color:#475569; }
+    .domain-card-header.blue   { background:#dbeafe; color:#1e40af; }
+    .domain-card-body { padding: .85rem 1rem; font-size: .85rem; }
+    .score-pill {
+      font-size: .78rem;
+      font-weight: 700;
+      padding: .2rem .65rem;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+    .score-pill.green  { background:#16a34a; color:white; }
+    .score-pill.orange { background:#ea580c; color:white; }
+    .score-pill.red    { background:#dc2626; color:white; }
+    .score-pill.gray   { background:#94a3b8; color:white; }
+
+    .bar-wrap { background: #e2e8f0; border-radius: 999px; height: 8px; margin: .4rem 0 .8rem; overflow: hidden; }
+    .bar { height: 100%; border-radius: 999px; transition: width .4s; }
+    .bar.green  { background: var(--green); }
+    .bar.orange { background: var(--orange); }
+    .bar.red    { background: var(--red); }
+    .bar.gray   { background: #94a3b8; }
+
+    /* ── NORME ROWS ── */
+    .norme-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: .5rem;
+      padding: .45rem 0;
+      border-bottom: 1px dashed var(--border);
+      font-size: .83rem;
+    }
+    .norme-row:last-child { border-bottom: none; }
+    .norme-label { flex: 1; }
+    .norme-note {
+      font-weight: 700;
+      font-size: .82rem;
+      white-space: nowrap;
+    }
+    .norme-note.ok    { color: var(--green); }
+    .norme-note.ko    { color: var(--red); }
+    .norme-note.warn  { color: var(--orange); }
+    .norme-note.na    { color: var(--gray); font-style: italic; }
+    .norme-note.check { color: #7c3aed; }
+
+    /* ── CRITERION ROWS ── */
+    .crit { display: flex; align-items: flex-start; gap: .4rem; padding: .2rem 0; font-size: .82rem; }
+    .crit-icon { flex-shrink: 0; margin-top: .1rem; }
+    .ok-icon   { color: var(--green); }
+    .ko-icon   { color: var(--red); }
+    .na-icon   { color: var(--gray); }
+    .check-icon { color: #7c3aed; }
+
+    /* ── TABLES ── */
+    table { width: 100%; border-collapse: collapse; font-size: .83rem; margin-top: .75rem; }
+    th { background: #1e293b; color: white; padding: .5rem .75rem; text-align: left; font-size: .78rem; }
+    td { padding: .45rem .75rem; border-bottom: 1px solid var(--border); }
+    tr:last-child td { border-bottom: none; }
+    tr:nth-child(even) td { background: #f8fafc; }
+    td.num { text-align: right; font-weight: 600; }
+    td.ok  { color: var(--green); font-weight: 700; }
+    td.ko  { color: var(--red); font-weight: 700; }
+
+    /* ── STRENGTHS / WEAKNESSES ── */
+    .sw-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    @media (max-width: 640px) { .sw-grid { grid-template-columns: 1fr; } }
+    .sw-card { border-radius: 8px; padding: 1rem 1.2rem; }
+    .sw-card.strengths { background: #f0fdf4; border: 1px solid #bbf7d0; }
+    .sw-card.weaknesses { background: #fff7ed; border: 1px solid #fed7aa; }
+    .sw-card h3 { font-size: .9rem; font-weight: 700; margin-bottom: .6rem; }
+    .sw-card.strengths h3 { color: #166534; }
+    .sw-card.weaknesses h3 { color: #9a3412; }
+    .sw-card li { list-style: none; padding: .25rem 0; font-size: .83rem; display: flex; gap: .4rem; }
+
+    /* ── RECOS TABLE ── */
+    .reco-table td { vertical-align: top; font-size: .8rem; }
+    .reco-table td:first-child { font-weight: 700; text-align: center; width: 30px; }
+    .priority { display: inline-block; padding: .15rem .5rem; border-radius: 4px; font-size: .72rem; font-weight: 700; }
+    .priority.urgent   { background:#fee2e2; color:#991b1b; }
+    .priority.high     { background:#ffedd5; color:#9a3412; }
+    .priority.medium   { background:#fef9c3; color:#854d0e; }
+
+    /* ── SIGNATURE ── */
+    .signature-block {
+      text-align: center;
+      margin-top: 1.5rem;
+      padding: 1.5rem;
+      border: 2px dashed var(--border);
+      border-radius: 8px;
+      font-size: .85rem;
+      color: var(--gray);
+    }
+
+    /* ── UTILITIES ── */
+    .mt1 { margin-top: .5rem; }
+    .mt2 { margin-top: 1rem; }
+    .note-highlight {
+      display: inline-block;
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--blue);
+    }
+    .sub-header {
+      font-size: .78rem;
+      font-weight: 700;
+      color: var(--gray);
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      margin: .8rem 0 .3rem;
+    }
+    .footer {
+      text-align: center;
+      padding: 1.5rem;
+      font-size: .75rem;
+      color: var(--gray);
+      border-top: 1px solid var(--border);
+      margin-top: 3rem;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════ COVER ══════════════ -->
+<div class="cover">
+  <div class="ministry">
+    Ministère de la Santé, de l'Hygiène Publique et de la Couverture Maladie Universelle — République de Côte d'Ivoire<br>
+    Secrétariat Technique de l'Achat Stratégique en Santé (STASS) | Programme Santé-Nutrition-DPE — Banque Mondiale
+  </div>
+  <h1>RAPPORT D'AUTO-ÉVALUATION<br>DE LA PERFORMANCE</h1>
+  <h2>DRS GAMMA — Région Sanitaire de FOLON</h2>
+  <div class="cover-meta">
+    <span>📅 Période : T1 2026</span>
+    <span>📍 Région : FOLON</span>
+    <span>👥 Population : 171 162 hbts</span>
+    <span>🗓️ Date d'évaluation : 04/06/2026</span>
+    <span>⏰ Heure de début : 10h30</span>
+  </div>
+  <div class="cover-badge">FBP / Achat Stratégique en Santé — Version Février 2025</div>
+</div>
+
+<div class="container">
+
+<!-- ══════════════ INFORMATIONS GÉNÉRALES ══════════════ -->
+<div class="section-title">1. Informations Générales</div>
+<div class="section-body">
+  <div class="info-grid">
+    <div class="info-item"><strong>Région sanitaire</strong>FOLON</div>
+    <div class="info-item"><strong>Période évaluée</strong>T1 2026 (Janvier – Mars 2026)</div>
+    <div class="info-item"><strong>Population totale</strong>171 162 habitants</div>
+    <div class="info-item"><strong>EPHR/EPHD (total / sous FBP)</strong>1 / 1</div>
+    <div class="info-item"><strong>Districts Sanitaires (total / sous FBP)</strong>2 / 2</div>
+    <div class="info-item"><strong>ESPC (total / sous FBP)</strong>49 / 35</div>
+    <div class="info-item"><strong>SSSU SAJ (total / sous FBP)</strong>1 / 1</div>
+    <div class="info-item"><strong>ES Privé lucratif / Confessionnel</strong>00 / 00</div>
+    <div class="info-item"><strong>Date de l'évaluation</strong>04 juin 2026</div>
+    <div class="info-item"><strong>Heure de début</strong>10h30</div>
+  </div>
+
+  <div class="sub-header mt2">Infrastructures (7 / 9 critères satisfaits)</div>
+  <div class="info-grid">
+    <div>
+      <div class="crit"><span class="crit-icon ok-icon">✅</span>Bureau du Directeur Régional</div>
+      <div class="crit"><span class="crit-icon ok-icon">✅</span>Local Suivi-Évaluation</div>
+      <div class="crit"><span class="crit-icon ok-icon">✅</span>Local Action Sanitaire</div>
+      <div class="crit"><span class="crit-icon ok-icon">✅</span>Local Administratif et Financier</div>
+      <div class="crit"><span class="crit-icon ok-icon">✅</span>Magasin de stockage</div>
+      <div class="crit"><span class="crit-icon ok-icon">✅</span>Salle de réunion</div>
+      <div class="crit"><span class="crit-icon ok-icon">✅</span>Secrétariat</div>
+      <div class="crit"><span class="crit-icon ko-icon">❌</span>Local Logistique — <em>ABSENT</em></div>
+      <div class="crit"><span class="crit-icon ko-icon">❌</span>Espace dédié à l'archivage — <em>ABSENT</em></div>
+    </div>
+    <div>
+      <div class="sub-header">Ressources Humaines (5 / 5 postes pourvus)</div>
+      <div class="crit"><span class="crit-icon ok-icon">✅</span>Médecin/Cadre santé — Responsable Suivi-Évaluation</div>
+      <div class="crit"><span class="crit-icon ok-icon">✅</span>Médecin/Cadre santé — Responsable Action Sanitaire</div>
+      <div class="crit"><span class="crit-icon ok-icon">✅</span>Pharmacien Régional</div>
+      <div class="crit"><span class="crit-icon ok-icon">✅</span>Gestionnaire Financier et Administratif</div>
+      <div class="crit"><span class="crit-icon ok-icon">✅</span>Secrétaire / Assistant de Direction</div>
+      <div class="sub-header mt1">Véhicules (2 véhicules)</div>
+      <div class="crit"><span class="crit-icon ok-icon">✅</span>Véhicule 1 — 5 ans — Bon état</div>
+      <div class="crit"><span class="crit-icon ok-icon">✅</span>Véhicule 2 — 4 ans — Bon état</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ SYNTHÈSE ══════════════ -->
+<div class="section-title">2. Synthèse Globale de l'Évaluation</div>
+<div class="section-body">
+  <table>
+    <thead>
+      <tr>
+        <th>Domaine</th>
+        <th>Points disponibles</th>
+        <th>Points obtenus</th>
+        <th>% Obtenu</th>
+        <th>Statut</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>A. Indicateurs liés au Processus (Bureau DRS)</td>
+        <td class="num">700</td>
+        <td class="num">—</td>
+        <td class="num">—</td>
+        <td>Données partielles</td>
+      </tr>
+      <tr>
+        <td>B. Activités ETSA et Districts</td>
+        <td class="num">100</td>
+        <td class="num">—</td>
+        <td class="num">—</td>
+        <td>Non renseigné</td>
+      </tr>
+      <tr>
+        <td>C. Indicateurs de Performance Région</td>
+        <td class="num">200</td>
+        <td class="num">—</td>
+        <td class="num">—</td>
+        <td>Non renseigné</td>
+      </tr>
+      <tr style="font-weight:700; background:#1e293b; color:white;">
+        <td>TOTAL GÉNÉRAL</td>
+        <td class="num">1 000</td>
+        <td class="num">—</td>
+        <td class="num">—</td>
+        <td>Score final en attente</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="sub-header mt2">Récapitulatif des domaines avec scores confirmés</div>
+  <div class="domain-grid mt1">
+
+    <!-- Domain 3 -->
+    <div class="domain-card">
+      <div class="domain-card-header green">
+        Dom. 3 — CMU & Monitorage
+        <span class="score-pill green">40 / 50 pts</span>
+      </div>
+      <div class="domain-card-body">
+        <div class="bar-wrap"><div class="bar green" style="width:80%"></div></div>
+        <strong>80 %</strong>
+        <div class="norme-row mt1">
+          <span class="norme-label">3.01 — Rapport synthèse CMU signé (40 pts)</span>
+          <span class="norme-note ok">40 / 40</span>
+        </div>
+        <div class="norme-row">
+          <span class="norme-label">3.02 — Monitorage activités ESPC (10 pts)</span>
+          <span class="norme-note ko">0 / 10</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Domain 4 -->
+    <div class="domain-card">
+      <div class="domain-card-header orange">
+        Dom. 4 — Rapport trimestriel
+        <span class="score-pill orange">25 / 75 pts</span>
+      </div>
+      <div class="domain-card-body">
+        <div class="bar-wrap"><div class="bar orange" style="width:33%"></div></div>
+        <strong>33 %</strong>
+        <div class="norme-row mt1">
+          <span class="norme-label">Rapport signé par le DR</span>
+          <span class="norme-note ko">NON → 0</span>
+        </div>
+        <div class="norme-row">
+          <span class="norme-label">CR réunion trimestrielle TRS-ASS</span>
+          <span class="norme-note ok">OUI → 25</span>
+        </div>
+        <div class="norme-row">
+          <span class="norme-label">Taux d'exécution ≥ 75%</span>
+          <span class="norme-note ko">NON → 0</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Domain 5 -->
+    <div class="domain-card">
+      <div class="domain-card-header orange">
+        Dom. 5 — Supervision & Qualité
+        <span class="score-pill orange">55 / 150 pts</span>
+      </div>
+      <div class="domain-card-body">
+        <div class="bar-wrap"><div class="bar orange" style="width:37%"></div></div>
+        <strong>37 % (données partielles)</strong>
+        <div class="norme-row mt1">
+          <span class="norme-label">5.01 — Supervision intégrée (25 pts)</span>
+          <span class="norme-note ko">0 / 25</span>
+        </div>
+        <div class="norme-row">
+          <span class="norme-label">5.02 — Évaluation qualité ETSA (35 pts)</span>
+          <span class="norme-note ok">35 / 35 ✨</span>
+        </div>
+        <div class="norme-row">
+          <span class="norme-label">5.03 — Suivi recommandations (40 pts)</span>
+          <span class="norme-note check">En attente</span>
+        </div>
+        <div class="norme-row">
+          <span class="norme-label">5.04 — Capitalisation (50 pts)</span>
+          <span class="norme-note warn">20 / 50</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Domain 6 -->
+    <div class="domain-card">
+      <div class="domain-card-header blue">
+        Dom. 6 — SIS
+        <span class="score-pill gray">43 / 100 pts (partiel)</span>
+      </div>
+      <div class="domain-card-body">
+        <div class="bar-wrap"><div class="bar" style="width:43%; background:#1d4ed8;"></div></div>
+        <strong>43 % (données partielles)</strong>
+        <div class="norme-row mt1">
+          <span class="norme-label">6.01 — DHIS2 & portail FBP (35 pts)</span>
+          <span class="norme-note ok">30 / 35</span>
+        </div>
+        <div class="norme-row">
+          <span class="norme-label">6.02 — Qualité données ETSA (35 pts)</span>
+          <span class="norme-note check">En attente</span>
+        </div>
+        <div class="norme-row">
+          <span class="norme-label">6.03 — Validation et analyse (25 pts)</span>
+          <span class="norme-note check">En attente</span>
+        </div>
+        <div class="norme-row">
+          <span class="norme-label">6.04 — Affichage résultats (10 pts)</span>
+          <span class="norme-note ok">13 / 10</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Domain 7 -->
+    <div class="domain-card">
+      <div class="domain-card-header green">
+        Dom. 7 — Organisation & Réunions
+        <span class="score-pill green">70 / 80 pts</span>
+      </div>
+      <div class="domain-card-body">
+        <div class="bar-wrap"><div class="bar green" style="width:88%"></div></div>
+        <strong>88 %</strong>
+        <div class="norme-row mt1">
+          <span class="norme-label">7.01 — Réunions ERS (20 pts)</span>
+          <span class="norme-note warn">10 / 20</span>
+        </div>
+        <div class="norme-row">
+          <span class="norme-label">7.02 — TRS-ASS (60 pts)</span>
+          <span class="norme-note ok">60 / 60 ✨</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Domain 9 -->
+    <div class="domain-card">
+      <div class="domain-card-header green">
+        Dom. 9 — Archivage
+        <span class="score-pill green">20 / 25 pts</span>
+      </div>
+      <div class="domain-card-body">
+        <div class="bar-wrap"><div class="bar green" style="width:80%"></div></div>
+        <strong>80 %</strong>
+        <div class="norme-row mt1">
+          <span class="norme-label">Équipements de rangement</span>
+          <span class="norme-note ok">OUI → 10</span>
+        </div>
+        <div class="norme-row">
+          <span class="norme-label">Documents rangés dans cartons</span>
+          <span class="norme-note ok">OUI → 10</span>
+        </div>
+        <div class="norme-row">
+          <span class="norme-label">Versions électroniques scannées</span>
+          <span class="norme-note ko">NON → 0</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════ DOMAINE A — PROCESSUS ══════════════ -->
+<div class="section-title">3. A — Indicateurs liés au Processus (Bureau de la DRS) — 700 pts</div>
+<div class="section-body">
+
+  <!-- 1. Plan d'action -->
+  <div class="sub-header">Domaine 1 — Plan d'Action (40 pts)</div>
+  <table>
+    <thead>
+      <tr><th>Norme / Critère</th><th>Obs.</th><th>Côte</th><th>Note</th></tr>
+    </thead>
+    <tbody>
+      <tr style="background:#fef2f2;">
+        <td><strong>Norme 1.01</strong> — PAA budgétisé élaboré dans les délais (10 pts)</td>
+        <td class="ko">—</td><td class="num">10</td><td class="num ko">0</td>
+      </tr>
+      <tr><td>— PAA de l'année en cours disponible</td><td class="ko">NON</td><td class="num">5</td><td class="num ko">0</td></tr>
+      <tr><td>— Rapports d'élaboration et validation disponibles</td><td class="ko">NON</td><td class="num">5</td><td class="num ko">0</td></tr>
+      <tr><td>— PAA signé dans les délais requis</td><td class="ko">NON</td><td class="num">5</td><td class="num ko">0</td></tr>
+      <tr><td>— Parties prenantes ayant participé à la validation</td><td class="ko">0 %</td><td class="num">5</td><td class="num ko">0</td></tr>
+      <tr style="background:#fef2f2;">
+        <td><strong>Norme 1.02</strong> — PAA conforme (toutes ressources + critères) (15 pts)</td>
+        <td class="ko">—</td><td class="num">15</td><td class="num ko">~6</td>
+      </tr>
+      <tr><td>— Budget de l'État inclus</td><td class="ok">OUI</td><td class="num">3</td><td class="num ok">3</td></tr>
+      <tr><td>— Ressources FBP incluses</td><td class="ok">OUI</td><td class="num">3</td><td class="num ok">3</td></tr>
+      <tr><td>— Ressources PTF incluses</td><td class="ok">OUI</td><td class="num">3</td><td class="num ok">3</td></tr>
+      <tr><td>— Dons et Legs inclus</td><td class="ko">NON</td><td class="num">3</td><td class="num ko">0</td></tr>
+      <tr><td>— Signatures parties prenantes sur page tableau des coûts</td><td class="ko">NON</td><td class="num">2</td><td class="num ko">0</td></tr>
+      <tr><td>— Activités de formation continue incluses</td><td class="ok">OUI</td><td class="num">3</td><td class="num ok">3</td></tr>
+      <tr><td>— Activités budgétisées dans tableau des coûts détaillés</td><td class="ok">OUI</td><td class="num">3</td><td class="num ok">3</td></tr>
+      <tr><td>— Revue trimestrielle du PAA réalisée</td><td>—</td><td class="num">4</td><td class="num">—</td></tr>
+      <tr style="background:#fef2f2;">
+        <td><strong>Norme 1.03</strong> — Contrats et PAA des structures disponibles (15 pts)</td>
+        <td class="ko">—</td><td class="num">15</td><td class="num warn">~6</td>
+      </tr>
+      <tr><td>— Contrats EPHR/DDS/CAT signés dans délais</td><td class="ko">NON</td><td class="num">2</td><td class="num ko">0</td></tr>
+      <tr><td>— Tous les PAA des structures disponibles</td><td class="ko">NON</td><td class="num">2</td><td class="num ko">0</td></tr>
+      <tr><td>— Cohérence entre problèmes identifiés et activités proposées</td><td class="ok">OUI</td><td class="num">3</td><td class="num ok">3</td></tr>
+      <tr><td>— Activités budgétisées figurent dans tableau des coûts</td><td class="ok">OUI</td><td class="num">3</td><td class="num ok">3</td></tr>
+      <tr><td>— PAA et contrats mis à disposition du STASS</td><td class="ko">NON</td><td class="num">5</td><td class="num ko">0</td></tr>
+    </tbody>
+  </table>
+
+  <!-- 2. Gouvernance -->
+  <div class="sub-header mt2">Domaine 2 — Gouvernance Financière (100 pts)</div>
+  <table>
+    <thead>
+      <tr><th>Norme / Critère</th><th>Obs.</th><th>Côte</th><th>Note</th></tr>
+    </thead>
+    <tbody>
+      <tr style="background:#f1f5f9;">
+        <td><strong>Norme 2.01</strong> — Documents financiers et comptables (25 pts)</td>
+        <td>—</td><td class="num">25</td><td class="num">—</td>
+      </tr>
+      <tr><td>— Documents financiers et comptables disponibles et à jour</td><td>—</td><td class="num">10</td><td class="num">—</td></tr>
+      <tr><td>— Outil de suivi de la gestion financière du bureau DRS</td><td>—</td><td class="num">15</td><td class="num">—</td></tr>
+      <tr><td>— Outil STASS de suivi en ligne opérationnel</td><td>—</td><td class="num">15</td><td class="num">—</td></tr>
+      <tr style="background:#f1f5f9;">
+        <td><strong>Norme 2.02</strong> — Répartition des primes conforme (30 pts)</td>
+        <td>—</td><td class="num">30</td><td class="num">—</td>
+      </tr>
+      <tr><td>— États de répartition des primes émargés disponibles</td><td>—</td><td class="num">15</td><td class="num">—</td></tr>
+      <tr><td>— Fiches d'évaluation individuelle renseignées</td><td>—</td><td class="num">15</td><td class="num">—</td></tr>
+      <tr><td>— PV de l'AG de répartition des primes</td><td>—</td><td class="num">15</td><td class="num">—</td></tr>
+      <tr><td>— Synthèse trimestrielle des présences au poste</td><td>—</td><td class="num">15</td><td class="num">—</td></tr>
+      <tr style="background:#fef9c3;">
+        <td><strong>Norme 2.03</strong> — Comptabilité des flux financiers (30 pts)</td>
+        <td style="color:#854d0e; font-weight:700;">N/A</td><td class="num">30</td>
+        <td class="num" style="color:#854d0e; font-weight:700;">−30 du total</td>
+      </tr>
+      <tr style="background:#fef2f2;">
+        <td><strong>Norme 2.04</strong> — Outil gestion acquisitions (15 pts)</td>
+        <td class="ko">—</td><td class="num">15</td><td class="num ko">0</td>
+      </tr>
+      <tr><td>— Outil de suivi (tableau Excel) des acquisitions disponible</td><td class="ko">NON</td><td class="num">15</td><td class="num ko">0</td></tr>
+      <tr><td>— Items de l'outil correctement renseignés et à jour</td><td class="ko">NON</td><td class="num">15</td><td class="num ko">0</td></tr>
+    </tbody>
+  </table>
+
+  <!-- 3. CMU -->
+  <div class="sub-header mt2">Domaine 3 — Activité CMU & Monitorage (50 pts) — Note confirmée : 40/50 (80%)</div>
+  <table>
+    <thead>
+      <tr><th>Norme / Critère</th><th>Obs.</th><th>Côte</th><th>Note</th></tr>
+    </thead>
+    <tbody>
+      <tr style="background:#f0fdf4;">
+        <td><strong>Norme 3.01</strong> — Suivi des activités CMU (40 pts)</td>
+        <td class="ok">—</td><td class="num">40</td><td class="num ok">40</td>
+      </tr>
+      <tr><td>— Rapport synthèse CMU daté et signé par le DR disponible</td><td class="ok">OUI</td><td class="num">40</td><td class="num ok">40</td></tr>
+      <tr style="background:#fef2f2;">
+        <td><strong>Norme 3.02</strong> — Monitorage des activités ESPC par les DDS (10 pts)</td>
+        <td class="ko">—</td><td class="num">10</td><td class="num ko">0</td>
+      </tr>
+      <tr><td>— Disponibilité de tous les rapports synthèse des DDS</td><td class="ko">NON</td><td class="num">10</td><td class="num ko">0</td></tr>
+      <tr><td>— Rapports de restitution des résultats disponibles</td><td class="ko">NON</td><td class="num">10</td><td class="num ko">0</td></tr>
+    </tbody>
+  </table>
+
+  <!-- 4. Rapport -->
+  <div class="sub-header mt2">Domaine 4 — Réunion de Coordination & Rapport Trimestriel (75 pts) — Note confirmée : 25/75 (33%)</div>
+  <table>
+    <thead>
+      <tr><th>Critère</th><th>Obs.</th><th>Côte</th><th>Note</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>a. Rapport d'activités signé par le DR disponible</td><td class="ko">NON</td><td class="num">30</td><td class="num ko">0</td></tr>
+      <tr><td>b. Rapport élaboré au cours du 1er mois du trimestre suivant</td><td class="ok">OUI</td><td class="num">30</td><td class="num ko">0 *</td></tr>
+      <tr><td>c. Rapport contient l'ensemble des points requis</td><td class="ok">OUI</td><td class="num">30</td><td class="num ko">0 *</td></tr>
+      <tr><td>d. Point de mise en œuvre du PAA inclus</td><td class="ok">OUI</td><td class="num">20</td><td class="num ko">0 *</td></tr>
+      <tr><td>e. Taux d'exécution des activités programmées ≥ 75%</td><td class="ko">NON</td><td class="num">20</td><td class="num ko">0</td></tr>
+      <tr style="background:#f0fdf4;"><td>f. Compte rendu de la réunion trimestrielle TRS-ASS disponible</td><td class="ok">OUI</td><td class="num">25</td><td class="num ok">25</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:.78rem; color:var(--gray); margin-top:.4rem;">* Note = 0 car conditionnelle à la disponibilité du rapport signé par le DR (critère a non satisfait)</p>
+
+  <!-- 5. Supervision -->
+  <div class="sub-header mt2">Domaine 5 — Supervision, Qualité & Capitalisation (150 pts) — Note partielle : 55/150</div>
+  <table>
+    <thead>
+      <tr><th>Norme / Critère</th><th>Obs.</th><th>Côte</th><th>Note</th></tr>
+    </thead>
+    <tbody>
+      <tr style="background:#fef2f2;">
+        <td><strong>Norme 5.01</strong> — Supervision intégrée trimestrielle (25 pts)</td>
+        <td class="ko">—</td><td class="num">25</td><td class="num ko">0</td>
+      </tr>
+      <tr><td>— Programme annuel de supervision disponible</td><td class="ok">OUI</td><td class="num">8</td><td class="num ko">0</td></tr>
+      <tr><td>— Plan de suivi des recommandations à jour</td><td class="ko">NON</td><td class="num">8</td><td class="num ko">0</td></tr>
+      <tr><td>— TDR de la supervision rédigés</td><td class="ko">NON</td><td class="num">5</td><td class="num ko">0</td></tr>
+      <tr><td>— TDR contiennent tous les points requis</td><td class="ko">NON</td><td class="num">5</td><td class="num ko">0</td></tr>
+      <tr><td>— Rapport de supervision disponible</td><td class="ko">NON</td><td class="num">7</td><td class="num ko">0</td></tr>
+      <tr><td>— Rapport transmis aux DDS/CAT/EPHR</td><td class="ko">NON</td><td class="num">7</td><td class="num ko">0</td></tr>
+      <tr><td>— % structures ayant réalisé ≥ 75% des recommandations</td><td class="ko">NON</td><td class="num">5</td><td class="num ko">0</td></tr>
+      <tr style="background:#f0fdf4;">
+        <td><strong>Norme 5.02</strong> — Évaluation trimestrielle de la qualité ETSA (35 pts) ✨</td>
+        <td class="ok">—</td><td class="num">35</td><td class="num ok">35</td>
+      </tr>
+      <tr><td>— Programme transmis au STASS</td><td class="ok">OUI</td><td class="num">5</td><td class="num ok">5</td></tr>
+      <tr><td>— Évaluation trimestrielle réalisée</td><td class="ok">OUI</td><td class="num">5</td><td class="num ok">5</td></tr>
+      <tr><td>— Grilles d'évaluation qualité disponibles</td><td class="ok">OUI</td><td class="num">5</td><td class="num ok">5</td></tr>
+      <tr><td>— Rapport synthétique disponible</td><td class="ok">OUI</td><td class="num">10</td><td class="num ok">10</td></tr>
+      <tr><td>— Rapport transmis au STASS dans les 10 jours</td><td class="ok">OUI</td><td class="num">10</td><td class="num ok">10</td></tr>
+      <tr><td>— Résultats des évaluations affichés au sein de la DRS</td><td class="ok">OUI</td><td class="num">10</td><td class="num ok">10</td></tr>
+      <tr style="background:#f1f5f9;">
+        <td><strong>Norme 5.03</strong> — Suivi des recommandations/actions correctrices (40 pts)</td>
+        <td>—</td><td class="num">40</td><td class="num">—</td>
+      </tr>
+      <tr><td>— 75% des recommandations mises en œuvre</td><td>—</td><td class="num">25</td><td class="num">—</td></tr>
+      <tr><td>— Plan de suivi des recommandations disponible</td><td>—</td><td class="num">15</td><td class="num">—</td></tr>
+      <tr><td>— Point de la contrevérification</td><td>N/A</td><td class="num">15</td><td class="num">N/A</td></tr>
+      <tr style="background:#fff7ed;">
+        <td><strong>Norme 5.04</strong> — Capitalisation des expériences (50 pts)</td>
+        <td class="warn">—</td><td class="num">50</td><td class="num warn">20</td>
+      </tr>
+      <tr><td>— Rapport synthétique évaluation qualité ETSA disponible</td><td class="ok">OUI</td><td class="num">20</td><td class="num ok">20</td></tr>
+      <tr><td>— Documentation des initiatives et pratiques innovantes FBP/ASS</td><td class="ko">NON</td><td class="num">30</td><td class="num ko">0</td></tr>
+    </tbody>
+  </table>
+
+  <!-- 6. SIS -->
+  <div class="sub-header mt2">Domaine 6 — Système d'Information Sanitaire (100 pts) — Note partielle : 43/100</div>
+  <table>
+    <thead>
+      <tr><th>Norme / Critère</th><th>Obs.</th><th>Côte</th><th>Note</th></tr>
+    </thead>
+    <tbody>
+      <tr style="background:#dbeafe;">
+        <td><strong>Norme 6.01</strong> — DHIS2 et portail FBP (35 pts)</td>
+        <td>—</td><td class="num">35</td><td class="num ok">30</td>
+      </tr>
+      <tr><td>— Saisie EPHR dans DHIS2 avant le 10 du mois suivant</td><td class="ok">OUI</td><td class="num">5</td><td class="num ok">5</td></tr>
+      <tr><td>— Complétude de saisie DHIS2</td><td class="ok">100 %</td><td class="num">5</td><td class="num ok">5</td></tr>
+      <tr><td>— Promptitude ≥ 95%</td><td style="color:var(--orange); font-weight:700;">94 % ⚠</td><td class="num">5</td><td class="num ko">0</td></tr>
+      <tr><td>— Complétude données qualité portail FBP</td><td class="ok">100 %</td><td class="num">10</td><td class="num ok">10</td></tr>
+      <tr><td>— Données qualité saisies dans les délais (portail FBP)</td><td class="ok">100 %</td><td class="num">10</td><td class="num ok">10</td></tr>
+      <tr style="background:#f1f5f9;">
+        <td><strong>Norme 6.02</strong> — Qualité des données ETSA (35 pts)</td>
+        <td>—</td><td class="num">35</td><td class="num">—</td>
+      </tr>
+      <tr><td>— Rétro-information préanalyse des données</td><td>—</td><td class="num">10</td><td class="num">—</td></tr>
+      <tr><td>— Rétro-information corrections DDS</td><td>—</td><td class="num">10</td><td class="num">—</td></tr>
+      <tr><td>— Mémo/rapport analyse qualité données SIS</td><td>—</td><td class="num">10</td><td class="num">—</td></tr>
+      <tr><td>— Mémo validation données qualité (FBP) DDS transmis STASS</td><td>—</td><td class="num">10</td><td class="num">—</td></tr>
+      <tr style="background:#f1f5f9;">
+        <td><strong>Norme 6.03</strong> — Validation et analyse trimestrielle (25 pts)</td>
+        <td>—</td><td class="num">25</td><td class="num">—</td>
+      </tr>
+      <tr><td>— Rapport d'analyse trimestriel disponible</td><td>—</td><td class="num">15</td><td class="num">—</td></tr>
+      <tr><td>— Rapport transmis aux responsables des structures</td><td>—</td><td class="num">10</td><td class="num">—</td></tr>
+      <tr style="background:#f0fdf4;">
+        <td><strong>Norme 6.04</strong> — Affichage des résultats sanitaires (10 pts)</td>
+        <td>—</td><td class="num">10</td><td class="num ok">13</td>
+      </tr>
+      <tr><td>— Carte de l'aire sanitaire actualisée affichée</td><td class="ok">OUI</td><td class="num">3</td><td class="num ok">3</td></tr>
+      <tr><td>— Monographie de la DRS affichée et accessible</td><td class="ok">OUI</td><td class="num">3</td><td class="num ok">3</td></tr>
+      <tr><td>— Données sanitaires régionales affichées sur tableau</td><td class="ok">OUI</td><td class="num">7</td><td class="num ok">7</td></tr>
+    </tbody>
+  </table>
+
+  <!-- 7. Organisation -->
+  <div class="sub-header mt2">Domaine 7 — Organisation & Participation aux Réunions (80 pts) — Note : 70/80 (88%)</div>
+  <table>
+    <thead>
+      <tr><th>Norme / Critère</th><th>Obs.</th><th>Côte</th><th>Note</th></tr>
+    </thead>
+    <tbody>
+      <tr style="background:#fff7ed;">
+        <td><strong>Norme 7.01</strong> — Réunions mensuelles ERS (20 pts)</td>
+        <td>—</td><td class="num">20</td><td class="num warn">10</td>
+      </tr>
+      <tr><td>— Document désignant les membres de l'ERS disponible</td><td class="ok">OUI</td><td class="num">5</td><td class="num ok">5</td></tr>
+      <tr><td>— 3 comptes-rendus des réunions ERS du trimestre disponibles</td><td class="ko">NON</td><td class="num">10</td><td class="num ko">0</td></tr>
+      <tr><td>— CR contiennent tous les points requis</td><td class="ko">NON</td><td class="num">10</td><td class="num ko">0</td></tr>
+      <tr><td>— ≥ 80% des membres ERS participent à chaque réunion</td><td class="ok">OUI</td><td class="num">5</td><td class="num ok">5</td></tr>
+      <tr style="background:#f0fdf4;">
+        <td><strong>Norme 7.02</strong> — TRS-ASS (60 pts) ✨ SCORE MAXIMAL</td>
+        <td>—</td><td class="num">60</td><td class="num ok">60</td>
+      </tr>
+      <tr><td>— TRS-ASS constituée et opérationnelle</td><td class="ok">OUI</td><td class="num">40</td><td class="num ok">40</td></tr>
+      <tr><td>— TRS-ASS tenue dans les délais (≤ 2 mois après fin trim.)</td><td class="ok">OUI</td><td class="num">40</td><td class="num ok">40</td></tr>
+      <tr><td>— CR signé du DR avec liste de présence manuscrite</td><td class="ok">OUI</td><td class="num">40</td><td class="num ok">40</td></tr>
+      <tr><td>— Taux de participation ≥ 80% (membres TRS-ASS)</td><td class="ok">OUI — 88%</td><td class="num">10</td><td class="num ok">10</td></tr>
+      <tr><td>— CR de la réunion TRS-ASS transmis au STASS dans les délais</td><td class="ok">OUI</td><td class="num">10</td><td class="num ok">10</td></tr>
+    </tbody>
+  </table>
+
+  <!-- 8. Référence -->
+  <div class="sub-header mt2">Domaine 8 — Référence/Contre-Référence & SDMR (80 pts)</div>
+  <table>
+    <thead>
+      <tr><th>Norme / Critère</th><th>Obs.</th><th>Côte</th><th>Note</th></tr>
+    </thead>
+    <tbody>
+      <tr style="background:#f1f5f9;">
+        <td><strong>Norme 8.01</strong> — Système de référence/contre-référence (10 pts)</td>
+        <td>—</td><td class="num">10</td><td class="num">—</td>
+      </tr>
+      <tr><td>— Rapports d'analyse références/contre-références des DDS</td><td style="color:#7c3aed;">Voir secrétariat</td><td class="num">5</td><td class="num">—</td></tr>
+      <tr><td>— 3 rapports mensuels EPHR + rapport trimestriel CAT disponibles</td><td class="ko">NON</td><td class="num">5</td><td class="num ko">0</td></tr>
+      <tr style="background:#f1f5f9;">
+        <td><strong>Norme 8.02</strong> — Comités départementaux SDMR (70 pts)</td>
+        <td>—</td><td class="num">70</td><td class="num">—</td>
+      </tr>
+      <tr><td>— CR avec listes de présence des réunions CD-SDMR</td><td style="color:#7c3aed;">Voir CSE</td><td class="num">10</td><td class="num">—</td></tr>
+      <tr><td>— Réunion tenue avec présence du Préfet ou représentant</td><td style="color:#7c3aed;">Voir CSE</td><td class="num">25</td><td class="num">—</td></tr>
+      <tr><td>— Rapport synthèse des comités disponible</td><td style="color:#7c3aed;">Voir CSE</td><td class="num">20</td><td class="num">—</td></tr>
+      <tr><td>— Rapport synthèse transmis au niveau central (DGS, DIS, PNSME)</td><td class="ok">OUI</td><td class="num">—</td><td class="num">—</td></tr>
+      <tr><td>— Plan de riposte SDMR du trimestre précédent exécuté</td><td style="color:#7c3aed;">Voir CSE</td><td class="num">15</td><td class="num">—</td></tr>
+    </tbody>
+  </table>
+
+  <!-- 9. Archivage -->
+  <div class="sub-header mt2">Domaine 9 — Archivage (25 pts) — Note : 20/25 (80%)</div>
+  <table>
+    <thead>
+      <tr><th>Critère</th><th>Obs.</th><th>Côte</th><th>Note</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>— DRS dotée d'équipements et outils de rangement (armoires, cartons)</td><td class="ok">OUI</td><td class="num">10</td><td class="num ok">10</td></tr>
+      <tr><td>— Documents classés dans les cartons d'archives appropriés</td><td class="ok">OUI</td><td class="num">10</td><td class="num ok">10</td></tr>
+      <tr><td>— Versions électroniques signées et scannées disponibles</td><td class="ko">NON</td><td class="num">15</td><td class="num ko">0</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ══════════════ DOMAINES B & C ══════════════ -->
+<div class="section-title">4. B & C — ETSA / Districts & Indicateurs de Performance</div>
+<div class="section-body">
+  <p style="font-size:.85rem; color:var(--gray); margin-bottom:1rem;">Les scores des domaines B (100 pts — Normes 10.01 à 10.14) et C (200 pts — Norme 11.01) sont calculés par référence croisée aux grilles d'évaluation qualité des ETSA et des DDS. Les pourcentages n'ont pas été renseignés dans le document source à la date du 04/06/2026. Le score global sera finalisé lors de la transmission au STASS.</p>
+
+  <table>
+    <thead>
+      <tr><th>Norme</th><th>Description</th><th>Côte</th><th>Note</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>10.01</td><td>Suivi élaboration des PAA (EPHR, CAT, DDS)</td><td class="num">7</td><td class="num">—</td></tr>
+      <tr><td>10.02</td><td>Suivi de la revue trimestrielle des PAA</td><td class="num">6</td><td class="num">—</td></tr>
+      <tr><td>10.03</td><td>Suivi bonne gestion financière et comptable</td><td class="num">7</td><td class="num">—</td></tr>
+      <tr><td>10.04</td><td>Suivi mise en œuvre recommandations supervisions</td><td class="num">6</td><td class="num">—</td></tr>
+      <tr><td>10.05</td><td>Suivi gestion des stocks et immobilisations</td><td class="num">6</td><td class="num">—</td></tr>
+      <tr><td>10.06</td><td>Suivi bon accueil des usagers (EPHR, CAT)</td><td class="num">7</td><td class="num">—</td></tr>
+      <tr><td>10.07</td><td>Suivi satisfaction des usagers (ETSA)</td><td class="num">7</td><td class="num">—</td></tr>
+      <tr><td>10.08</td><td>Suivi mise en œuvre CMU par les DDS</td><td class="num">12</td><td class="num">—</td></tr>
+      <tr><td>10.09</td><td>Disponibilité des codes prescripteurs CMU (ETSA)</td><td class="num">6</td><td class="num">—</td></tr>
+      <tr><td>10.10</td><td>Renseignement SurveyCTO et feuilles de soins CMU</td><td class="num">6</td><td class="num">—</td></tr>
+      <tr><td>10.11</td><td>Disponibilité du matériel SONU B&C (EPHR)</td><td class="num">6</td><td class="num">—</td></tr>
+      <tr><td>10.12</td><td>Hygiène hospitalière (EPHR, CAT)</td><td class="num">6</td><td class="num">—</td></tr>
+      <tr><td>10.13</td><td>Utilisation des 4 fonctionnalités m-Supply (ETSA)</td><td class="num">6</td><td class="num">—</td></tr>
+      <tr><td>10.14</td><td>Suivi décès maternels ayant fait l'objet d'une revue</td><td class="num">12</td><td class="num">—</td></tr>
+      <tr style="background:#1e293b; color:white; font-weight:700;"><td colspan="2">Sous-total B</td><td class="num">100</td><td class="num">—</td></tr>
+      <tr><td>11.01</td><td>Performance interventions programmes prioritaires (10 indicateurs)</td><td class="num">200</td><td class="num">—</td></tr>
+      <tr style="background:#1e293b; color:white; font-weight:700;"><td colspan="2">Sous-total C</td><td class="num">200</td><td class="num">—</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ══════════════ POINTS FORTS & AXES D'AMÉLIORATION ══════════════ -->
+<div class="section-title">5. Points Forts & Axes d'Amélioration</div>
+<div class="section-body">
+  <div class="sw-grid">
+    <div class="sw-card strengths">
+      <h3>✅ Points Forts</h3>
+      <ul>
+        <li><span>🏆</span><span><strong>Norme 5.02 — Évaluation qualité ETSA : 35/35 (100%)</strong> — Programme transmis, évaluation réalisée, grilles disponibles, rapports transmis dans les délais et résultats affichés</span></li>
+        <li><span>🏆</span><span><strong>Norme 7.02 — TRS-ASS : 60/60 (100%)</strong> — Taskforce opérationnelle, réunions dans les délais, taux de participation de 88%, CR transmis au STASS</span></li>
+        <li><span>⭐</span><span><strong>Norme 3.01 — Rapport synthèse CMU : 40/40 (100%)</strong> — Disponibilité du rapport signé du DR</span></li>
+        <li><span>⭐</span><span><strong>DHIS2 complétude : 100%</strong> — Saisie complète de toutes les données de la région</span></li>
+        <li><span>⭐</span><span><strong>Portail FBP complétude + promptitude : 100%</strong> — Données qualité saisies dans les délais</span></li>
+        <li><span>✅</span><span><strong>Ressources Humaines : 5/5 postes clés pourvus</strong> — Tous les services du siège de la DRS dotés</span></li>
+        <li><span>✅</span><span><strong>Archivage physique : 20/25 (80%)</strong> — Documents bien rangés et classés</span></li>
+        <li><span>✅</span><span><strong>Infrastructure opérationnelle : 7/9 critères</strong> — Services essentiels fonctionnels</span></li>
+        <li><span>✅</span><span><strong>Véhicules : 2 véhicules en bon état</strong> (4 et 5 ans)</span></li>
+        <li><span>✅</span><span><strong>Rapport synthèse SDMR transmis</strong> au niveau central (DGS, DIS, PNSME)</span></li>
+      </ul>
+    </div>
+    <div class="sw-card weaknesses">
+      <h3>⚠️ Axes d'Amélioration Prioritaires</h3>
+      <ul>
+        <li><span>🔴</span><span><strong>PAA 2026 non disponible et non signé (Norme 1.01 = 0/10)</strong> — Non-conformité majeure de planification</span></li>
+        <li><span>🔴</span><span><strong>Rapport trimestriel T1 non signé par le DR (Norme 4.01)</strong> — Conditionne 4 autres critères → impact sur 100 pts</span></li>
+        <li><span>🔴</span><span><strong>Supervision intégrée non réalisée (Norme 5.01 = 0/25)</strong> — Aucune supervision du personnel DDS/CAT/EPHR effectuée</span></li>
+        <li><span>🟠</span><span><strong>Outil de gestion des acquisitions absent (Norme 2.04 = 0/15)</strong></span></li>
+        <li><span>🟠</span><span><strong>Monitorage des DDS insuffisant (Norme 3.02 = 0/10)</strong> — Rapports synthèse des DDS non collectés</span></li>
+        <li><span>🟠</span><span><strong>Archivage électronique absent (Norme 9.01c = 0/15)</strong> — Versions scannées non disponibles</span></li>
+        <li><span>🟡</span><span><strong>Promptitude DHIS2 à 94%</strong> (seuil requis ≥ 95%) → 0 pt</span></li>
+        <li><span>🟡</span><span><strong>CR mensuels ERS non disponibles (Norme 7.01b) = 0/10</strong></span></li>
+        <li><span>🟡</span><span><strong>Documentation pratiques innovantes FBP (Norme 5.04b = 0/30)</strong></span></li>
+        <li><span>⬜</span><span><strong>Local logistique et espace d'archivage absents</strong> — Contrainte d'infrastructure à résoudre à moyen terme</span></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ RECOMMANDATIONS ══════════════ -->
+<div class="section-title">6. Plan d'Actions Correctives & Recommandations</div>
+<div class="section-body">
+  <table class="reco-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Problème identifié</th>
+        <th>Action corrective recommandée</th>
+        <th>Responsable</th>
+        <th>Délai</th>
+        <th>Priorité</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>PAA 2026 non disponible et non signé</td>
+        <td>Finaliser et valider le PAA 2026 avec toutes les parties prenantes requises, le faire signer dans les meilleurs délais et le transmettre au STASS</td>
+        <td>DR / STASS</td>
+        <td>Immédiat (T2 2026)</td>
+        <td><span class="priority urgent">URGENT</span></td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Rapport trimestriel T1 non signé par le DR</td>
+        <td>Signer le rapport d'activités T1 2026 sans délai et instituer la signature systématique dans le premier mois du trimestre suivant</td>
+        <td>DR</td>
+        <td>Immédiat</td>
+        <td><span class="priority urgent">URGENT</span></td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>Supervision intégrée non réalisée (Norme 5.01 = 0)</td>
+        <td>Planifier et exécuter la supervision intégrée T2 2026 avec TDR complets, rapport de supervision et transmission aux structures supervisées</td>
+        <td>DR / Resp. Suivi-Évaluation</td>
+        <td>T2 2026</td>
+        <td><span class="priority urgent">URGENT</span></td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>Outil de gestion des acquisitions absent</td>
+        <td>Créer et alimenter immédiatement un tableau Excel de suivi des acquisitions en matériels et équipements, conformément au Manuel de procédures</td>
+        <td>Gestionnaire Financier</td>
+        <td>T2 2026</td>
+        <td><span class="priority high">ÉLEVÉE</span></td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td>Rapports synthèse des DDS non collectés</td>
+        <td>Mettre en place une procédure de collecte systématique et de vérification des rapports synthèse des 2 DDS chaque trimestre</td>
+        <td>Resp. Suivi-Évaluation</td>
+        <td>T2 2026</td>
+        <td><span class="priority high">ÉLEVÉE</span></td>
+      </tr>
+      <tr>
+        <td>6</td>
+        <td>Versions électroniques des documents non disponibles</td>
+        <td>Scanner et archiver sur support numérique l'ensemble des documents requis par le Manuel de procédures (PAA, rapports, contrats, CR)</td>
+        <td>Secrétariat / Resp. Archivage</td>
+        <td>T2 2026</td>
+        <td><span class="priority high">ÉLEVÉE</span></td>
+      </tr>
+      <tr>
+        <td>7</td>
+        <td>Promptitude DHIS2 à 94% (sous le seuil de 95%)</td>
+        <td>Renforcer le calendrier de rappel de saisie de l'EPHR dans DHIS2 et désigner un point focal de vérification mensuel</td>
+        <td>Resp. SIS</td>
+        <td>T2 2026</td>
+        <td><span class="priority medium">MODÉRÉE</span></td>
+      </tr>
+      <tr>
+        <td>8</td>
+        <td>CR mensuels de l'ERS non disponibles</td>
+        <td>Instituer la rédaction et l'archivage systématique des comptes rendus de chaque réunion mensuelle de l'Équipe Régionale de Santé</td>
+        <td>Secrétariat / DR</td>
+        <td>T2 2026</td>
+        <td><span class="priority medium">MODÉRÉE</span></td>
+      </tr>
+      <tr>
+        <td>9</td>
+        <td>Documentation pratiques innovantes FBP absente</td>
+        <td>Créer un registre/classeur de capitalisation des expériences et bonnes pratiques de mise en œuvre du FBP/ASS dans la région</td>
+        <td>Resp. Qualité / DR</td>
+        <td>T2-T3 2026</td>
+        <td><span class="priority medium">MODÉRÉE</span></td>
+      </tr>
+      <tr>
+        <td>10</td>
+        <td>Local logistique et espace d'archivage absents</td>
+        <td>Soumettre une demande officielle au Ministère pour l'aménagement/attribution de locaux dédiés à la logistique et à l'archivage au siège de la DRS</td>
+        <td>DR / Ministère</td>
+        <td>Moyen terme</td>
+        <td><span class="priority medium">MODÉRÉE</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ══════════════ CONCLUSION ══════════════ -->
+<div class="section-title">7. Conclusion</div>
+<div class="section-body">
+  <p style="font-size:.9rem; margin-bottom:.9rem;">
+    La DRS GAMMA – Région Sanitaire de FOLON présente au T1 2026 des <strong>résultats d'excellence</strong> dans la gouvernance des réunions (TRS-ASS : 100%), l'évaluation de la qualité des ETSA (100%), la mise en œuvre des activités CMU (80%) et la fiabilité du Système d'Information Sanitaire (DHIS2 complétude : 100%, portail FBP : 100%).
+  </p>
+  <p style="font-size:.9rem; margin-bottom:.9rem;">
+    Des <strong>lacunes importantes</strong> persistent dans la planification opérationnelle (PAA non signé, rapport trimestriel non signé), la supervision intégrée du personnel (0/25 pts), la gouvernance financière (outil acquisitions absent) et l'archivage numérique, compromettant le score global et le respect des procédures FBP/STASS.
+  </p>
+  <p style="font-size:.9rem; margin-bottom:1.5rem;">
+    Le score global définitif du T1 2026 sera calculé après renseignement des scores des Domaines B (100 pts) et C (200 pts) à partir des grilles d'évaluation des ETSA et des districts, et après vérification des normes 2.01, 2.02, 5.03, 6.02, 6.03 et 8.02 dont les données sont en attente (CSE, secrétariat).
+  </p>
+  <div class="signature-block">
+    <p><strong>LE DIRECTEUR RÉGIONAL DE LA SANTÉ — REGION FOLON</strong></p>
+    <br>
+    <p><em>(Nom, Cachet, Signature)</em></p>
+    <br>
+    <p style="font-size:.75rem;">Date : ____________________</p>
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<div class="footer">
+  Rapport d'Auto-Évaluation de la Performance — DRS GAMMA | Région Sanitaire de FOLON | T1 2026<br>
+  Programme de Santé, Nutrition et Développement de la Petite Enfance — Banque Mondiale<br>
+  Secrétariat Technique de l'Achat Stratégique en Santé (STASS) | Ministère de la Santé, Côte d'Ivoire
+</div>
+
+</body>
+</html>
