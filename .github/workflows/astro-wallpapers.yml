@@ -17,7 +17,13 @@ jobs:
   update:
     runs-on: ubuntu-latest
     steps:
+      # On vise toujours explicitement la branche que le téléphone télécharge,
+      # quel que soit le déclencheur (schedule, dispatch, push). Indispensable
+      # pour que le cron — qui s'exécute depuis la branche par défaut du dépôt —
+      # mette bien à jour cette branche-ci.
       - uses: actions/checkout@v4
+        with:
+          ref: claude/astro-lockscreen-homescreen-sync-863mgt
 
       - name: Calculer les positions et mettre à jour les images
         run: |
@@ -31,7 +37,7 @@ jobs:
           git add astro/sun.jpg astro/moon.jpg astro/status.json
           if ! git diff --cached --quiet; then
             git commit -m "Mise à jour auto : Soleil/Lune ont changé de signe"
-            git push
+            git push origin HEAD:claude/astro-lockscreen-homescreen-sync-863mgt
           else
             echo "Aucun changement de signe — rien à committer."
           fi
