@@ -4,7 +4,8 @@
   "description": "",
   "scripts": {
     "dev": "remotion studio src/index.ts",
-    "render": "remotion render src/index.ts HelloWorld out/video.mp4"
+    "render": "remotion render src/index.ts HelloWorld out/video.mp4",
+    "render:rapport": "remotion render src/index.ts RapportFolon out/rapport-folon-t1-2026.mp4"
   },
   "keywords": [],
   "author": "",
